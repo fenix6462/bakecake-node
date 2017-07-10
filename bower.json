@@ -1,0 +1,29 @@
+{
+  "name": "bake-cake",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Bartłomiej Górski"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "node",
+    "mean",
+    "angular",
+    "mongodb",
+    "express"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "angular": "^1.6.5",
+    "bootstrap": "4.0.0-alpha.6"
+  }
+}

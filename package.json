@@ -1,0 +1,39 @@
+{
+  "name": "bake-cake",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fenix6462/bakecake-node.git"
+  },
+  "keywords": [
+    "node",
+    "mean",
+    "angular",
+    "mongodb",
+    "express"
+  ],
+  "author": "Bartłomiej Górski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fenix6462/bakecake-node/issues"
+  },
+  "homepage": "https://github.com/fenix6462/bakecake-node#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.12",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-less": "^3.3.2",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-nodemon": "^2.2.1",
+    "mocha": "^3.4.2",
+    "nodemon": "^1.11.0"
+  }
+}
