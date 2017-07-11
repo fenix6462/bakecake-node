@@ -12,13 +12,7 @@ var app = express();
 //BROWSER SYNC
 gulp.task('browser-sync', ['nodemon'], function(){
 	browserSync.init({
-		server: {
-            baseDir: "./public",
-		    routes:  {
-		        '/bower_components': 'bower_components'
-		    },
-			port: 5000
-		}
+		proxy: "http://localhost:5000"
 	})
 })
 
