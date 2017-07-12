@@ -1,6 +1,11 @@
-var productsData = require('../data/products.json');
+var dbconn = require('../data/dbconnection.js');
+var ObjectId = require('mongodb').ObjectId;
 
 module.exports.getProducts = function(req, res){
+
+	var db = dbconn.get();
+	var collection = db.collection('products');
+
 	var offset = 0;
 	var count = 5;
 
@@ -12,29 +17,58 @@ module.exports.getProducts = function(req, res){
 		count = parseInt(req.query.count, 10);
 	}
 
-	var returnData = productsData.slice(offset, offset+count);
+	collection
+		.find()
+		.skip(offset)
+		.limit(count)
+		.toArray(function(err, docs){
+			console.log("Found products", docs);
+			res
+				.status(200)
+				.json(docs)
+		});
 
-	console.log("GET products");
-
-	res
-		.status(200)
-		.json(returnData)
 }
+
 module.exports.getProduct = function(req, res){
+	var db = dbconn.get();
+	var collection = db.collection('products');
+
 	var productId = req.params.productId;
-	var product = productsData.find(function(element){
-		return element.id == productId;
-	})
-	console.log("GET product with Id = ", productId);
-	res
-		.status(200)
-		.json(product)
+
+	collection
+		.findOne({"_id": ObjectId(productId)}, function(err, doc){
+			console.log("GET product with Id = ", productId);
+
+			res
+				.status(200)
+				.json(doc);
+		})
 }
 
 module.exports.addProduct = function(req, res){
-	console.log("POST product");
-	console.log(req.body);
-	res
-		.status(200)
-		.json(req.body);
+	var db = dbconn.get();
+	var collection = db.collection('products');
+	var newProduct = {};
+
+	if(req.body && req.body.name && req.body.price && req.body.weight){
+		newProduct = {
+			name: req.body.name,
+			price: req.body.price,
+			weight: req.body.weight
+		}
+
+		collection
+			.insertOne(newProduct, function(err, response){
+				console.log(response.ops);
+				res
+					.status(201)
+					.json(response.ops);
+			})
+	} else {
+		console.log("Data missing from body");
+		res
+			.status(400)
+			.json({message : "Required data missing from body"});
+	}
 }
