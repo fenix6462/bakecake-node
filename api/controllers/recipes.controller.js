@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
-var Product = mongoose.model('Product');
+var Recipe = mongoose.model('Recipe');
 
-module.exports.getProducts = function(req, res){
+module.exports.getRecipes = function(req, res){
 
 	var offset = 0;
 	var count = 5;
@@ -14,47 +14,47 @@ module.exports.getProducts = function(req, res){
 		count = parseInt(req.query.count, 10);
 	}
 
-	Product
-		.find()
+	Recipe
+		.find({isDeleted: {$in: [null, false]}})
 		.skip(offset)
 		.limit(count)
-		.select({isDeleted: false})
-		.exec(function(err, products){
-			console.log("Found products", products.length);
+		.exec(function(err, recipes){
+			console.log("Found recipes", recipes.length);
 			res
-				.json(products);
+				.json(recipes);
 		});
 
 }
 
-module.exports.getProduct = function(req, res){
-	var productId = req.params.productId;
+module.exports.getRecipe = function(req, res){
+	var recipeId = req.params.recipeId;
 
-	Product
-		.findById(productId)
-		.exec(function(err, product){
-			console.log("Found product", product);
+	Recipe
+		.findById(recipeId)
+		.select('_id name description price photos products isPublished')
+		.exec(function(err, recipe){
+			console.log("Found recipe", recipe);
 
 			res
 				.status(200)
-				.json(product);
+				.json(recipe);
 		})
 }
 
-module.exports.addProduct = function(req, res){
+module.exports.addRecipe = function(req, res){
 	var db = dbconn.get();
-	var collection = db.collection('products');
-	var newProduct = {};
+	var collection = db.collection('recipes');
+	var newRecipe = {};
 
 	if(req.body && req.body.name && req.body.price && req.body.weight){
-		newProduct = {
+		newRecipe = {
 			name: req.body.name,
 			price: req.body.price,
 			weight: req.body.weight
 		}
 
 		collection
-			.insertOne(newProduct, function(err, response){
+			.insertOne(newRecipe, function(err, response){
 				console.log(response.ops);
 				res
 					.status(201)
@@ -68,14 +68,14 @@ module.exports.addProduct = function(req, res){
 	}
 }
 
-module.exports.updateProduct = function(req, res){
+module.exports.updateRecipe = function(req, res){
 	var db = dbconn.get();
-	var collection = db.collection('products');
-	var productId = req.params.productId;
-	var dbProduct = {};
+	var collection = db.collection('recipes');
+	var recipeId = req.params.recipeId;
+	var dbRecipe = {};
 
 	collection
-		.findOne({"_id": ObjectId(productId)}, function(err, doc){
+		.findOne({"_id": ObjectId(recipeId)}, function(err, doc){
 			res
 				.status(200)
 				.json(doc);
@@ -83,14 +83,14 @@ module.exports.updateProduct = function(req, res){
 
 
 	if(req.body && req.body.name && req.body.price && req.body.weight){
-		newProduct = {
+		newRecipe = {
 			name: req.body.name,
 			price: req.body.price,
 			weight: req.body.weight
 		}
 
 		collection
-			.insertOne(newProduct, function(err, response){
+			.insertOne(newRecipe, function(err, response){
 				console.log(response.ops);
 				res
 					.status(201)
@@ -104,14 +104,14 @@ module.exports.updateProduct = function(req, res){
 	}
 }
 
-module.exports.deleteProduct = function(req, res){
+module.exports.deleteRecipe = function(req, res){
 	var db = dbconn.get();
-	var collection = db.collection('products');
-	var productId = req.params.productId;
-	var dbProduct = {};
+	var collection = db.collection('recipes');
+	var recipeId = req.params.recipeId;
+	var dbRecipe = {};
 
 	collection
-		.findOne({"_id": ObjectId(productId)}, function(err, doc){
+		.findOne({"_id": ObjectId(recipeId)}, function(err, doc){
 			res
 				.status(200)
 				.json(doc);
@@ -119,14 +119,14 @@ module.exports.deleteProduct = function(req, res){
 
 
 	if(req.body && req.body.name && req.body.price && req.body.weight){
-		newProduct = {
+		newRecipe = {
 			name: req.body.name,
 			price: req.body.price,
 			weight: req.body.weight
 		}
 
 		collection
-			.insertOne(newProduct, function(err, response){
+			.insertOne(newRecipe, function(err, response){
 				console.log(response.ops);
 				res
 					.status(201)

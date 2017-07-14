@@ -26,7 +26,8 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
-    "mongodb": "^2.2.30"
+    "mongodb": "^2.2.30",
+    "mongoose": "^4.11.1"
   },
   "devDependencies": {
     "browser-sync": "^2.18.12",
