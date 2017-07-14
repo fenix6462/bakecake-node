@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var utc = new Date();
+utc.setHours( utc.getHours() + 2);
 
 var productSchema = new mongoose.Schema({
 	name: {
@@ -15,11 +17,11 @@ var productSchema = new mongoose.Schema({
 	},
 	createdAt: {
 		type: Date,
-		default: Date.now
+		default: utc
 	},
 	updatedAt: {
 		type: Date,
-		default: Date.now
+		default: utc
 	},
 	deletedAt: {
 		type: Date

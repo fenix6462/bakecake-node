@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product').schema;
+var utc = new Date();
+utc.setHours( utc.getHours() + 2);
 
 var recipeSchema = new mongoose.Schema({
 	name: {
@@ -23,11 +25,11 @@ var recipeSchema = new mongoose.Schema({
 	},
 	createdAt: {
 		type: Date,
-		default: new Date()
+		default: utc
 	},
 	updatedAt: {
 		type: Date,
-		default: new Date()
+		default: utc
 	},
 	deletedAt: {
 		type: Date
