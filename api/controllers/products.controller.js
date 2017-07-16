@@ -15,7 +15,7 @@ module.exports.getProducts = function(req, res){
 	}
 
 	Product
-		.find()
+		.find({isDeleted: {$in: [null, false]}})
 		.skip(offset)
 		.limit(count)
 		.select({isDeleted: false})

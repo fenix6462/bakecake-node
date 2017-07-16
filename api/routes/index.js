@@ -4,55 +4,32 @@ var router = express.Router();
 var productsController = require('../controllers/products.controller.js');
 var recipesController = require('../controllers/recipes.controller.js');
 
-//GET api/products
-router
-	.route('/products')
-	.get(productsController.getProducts);
+// Recipe
 
-//GET api/products/1
-router
-	.route('/products/:productId')
-	.get(productsController.getProduct);
-
-//POST api/products
-router
-	.route('/products')
-	.post(productsController.addProduct);
-
-//PUT api/products/1
-router
-	.route('/products/:productId')
-	.put(productsController.updateProduct);
-
-//DELETE api/products/1
-router
-	.route('/products/:productId')
-	.delete(productsController.deleteProduct);
-
-//GET api/recipes
 router
 	.route('/recipes')
-	.get(recipesController.getRecipes);
-
-//GET api/recipes/1
-router
-	.route('/recipes/:recipeId')
-	.get(recipesController.getRecipe);
-
-//POST api/recipes
-router
-	.route('/recipes')
+	.get(recipesController.getRecipes)
 	.post(recipesController.addRecipe);
 
-//PUT api/recipes/1
 router
-	.route('/recipes/:recipeId')
-	.put(recipesController.updateRecipe);
+	.route('/recipes/published')
+	.get(recipesController.getPublishedRecipes);
 
-//DELETE api/recipes/1
 router
 	.route('/recipes/:recipeId')
+	.get(recipesController.getRecipe)
+	.put(recipesController.updateRecipe)
 	.delete(recipesController.deleteRecipe);
+
+router
+	.route('/recipes/:recipeId/publish')
+	.post(recipesController.publishRecipe);
+
+
+router
+	.route('/recipes/:recipeId/unpublish')
+	.post(recipesController.unpublishRecipe);
+
 
 
 module.exports = router;
