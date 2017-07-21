@@ -24,14 +24,24 @@ module.exports.getProducts = function(req, res){
 		return;
 	}
 
-	connection.query("SELECT * FROM products", function(err, rows){
+	Product
+		.find()
+		.select('_id name description price photos products isPublished')
+		.skip(offset)
+		.limit(count)
+		.exec(function(err, products){
 			if(err){
-				console.error("Error creating table" + err);
+				console.log("Error finding products")
+				res
+					.status(500)
+					.json(err);
 			} else {
-                res.json(rows);
+				console.log("Found products", products.length);
+				res
+					.status(200)
+					.json(products);
 			}
-		}
-	)
+		});
 
 }
 

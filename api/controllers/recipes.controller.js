@@ -27,7 +27,7 @@ module.exports.getRecipes = function(req, res){
 
 	Recipe
 		.find({isDeleted: {$in: [null, false]}})
-		.select('_id name description price photos products isPublished')
+		.select('_id name weight price photos')
 		.skip(offset)
 		.limit(count)
 		.exec(function(err, recipes){
