@@ -15,6 +15,7 @@ var productSchema = new mongoose.Schema({
 		type: Number,
 		required: true
 	},
+	photo: String,
 	createdAt: {
 		type: Date,
 		default: utc

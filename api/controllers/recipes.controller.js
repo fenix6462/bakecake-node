@@ -36,7 +36,7 @@ module.exports.getRecipes = function(req, res){
 				res
 					.status(500)
 					.json(err);
-			} else {				
+			} else {
 				console.log("Found recipes", recipes.length);
 				res
 					.status(200)

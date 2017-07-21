@@ -1,5 +1,6 @@
-var mongoose = require('mongoose');
-var Product = mongoose.model('Product');
+var connection = require('../data/dbconnection.js');
+var utc = new Date();
+utc.setHours( utc.getHours() + 2);
 
 module.exports.getProducts = function(req, res){
 
@@ -14,16 +15,23 @@ module.exports.getProducts = function(req, res){
 		count = parseInt(req.query.count, 10);
 	}
 
-	Product
-		.find({isDeleted: {$in: [null, false]}})
-		.skip(offset)
-		.limit(count)
-		.select({isDeleted: false})
-		.exec(function(err, products){
-			console.log("Found products", products.length);
-			res
-				.json(products);
-		});
+	if(isNaN(offset) || isNaN(count)){
+		res
+			.status(400)
+			.json({
+				"message": "If supplied in querystring count and offset should be numbers"
+			});
+		return;
+	}
+
+	connection.query("SELECT * FROM products", function(err, rows){
+			if(err){
+				console.error("Error creating table" + err);
+			} else {
+                res.json(rows);
+			}
+		}
+	)
 
 }
 
@@ -32,110 +40,119 @@ module.exports.getProduct = function(req, res){
 
 	Product
 		.findById(productId)
+		.select("_id name weight price photo")
 		.exec(function(err, product){
-			console.log("Found product", product);
-
-			res
-				.status(200)
-				.json(product);
+			if(err){
+				console.log("Error finding product");
+				res
+					.status(500)
+					.json(err);
+			} else if (!product){
+				res
+					.status(404)
+					.json({
+						"message": "Product ID not found"
+					});
+			} else {
+				console.log("Found product", product);
+				res
+					.status(200)
+					.json(product);
+			}
 		})
 }
 
 module.exports.addProduct = function(req, res){
-	var db = dbconn.get();
-	var collection = db.collection('products');
-	var newProduct = {};
-
-	if(req.body && req.body.name && req.body.price && req.body.weight){
-		newProduct = {
+	Product
+		.create({
 			name: req.body.name,
-			price: req.body.price,
-			weight: req.body.weight
-		}
-
-		collection
-			.insertOne(newProduct, function(err, response){
-				console.log(response.ops);
+			weight: parseInt(req.body.weight),
+			price: parseFloat(req.body.price).toFixed(2),
+			photo: req.body.photo,
+			createdAt: utc,
+			updatedAt: utc
+		}, function(err, product){
+			if(err){
+				console.log("Error creating product");
+				res
+					.status(400)
+					.json(err);
+			} else {
+				console.log("Product created", product);
 				res
 					.status(201)
-					.json(response.ops);
-			})
-	} else {
-		console.log("Data missing from body");
-		res
-			.status(400)
-			.json({message : "Required data missing from body"});
-	}
+					.json(product);
+			}
+		})
 }
 
 module.exports.updateProduct = function(req, res){
-	var db = dbconn.get();
-	var collection = db.collection('products');
 	var productId = req.params.productId;
-	var dbProduct = {};
 
-	collection
-		.findOne({"_id": ObjectId(productId)}, function(err, doc){
-			res
-				.status(200)
-				.json(doc);
-		})
-
-
-	if(req.body && req.body.name && req.body.price && req.body.weight){
-		newProduct = {
-			name: req.body.name,
-			price: req.body.price,
-			weight: req.body.weight
-		}
-
-		collection
-			.insertOne(newProduct, function(err, response){
-				console.log(response.ops);
+	Product
+		.findById(productId)
+		.select('_id name weight price photo')
+		.exec(function(err, product){
+			if(err){
+				console.log("Error finding product");
 				res
-					.status(201)
-					.json(response.ops);
-			})
-	} else {
-		console.log("Data missing from body");
-		res
-			.status(400)
-			.json({message : "Required data missing from body"});
-	}
+					.status(500)
+					.json(err);
+			} else if (!product){
+				res
+					.status(404)
+					.json({
+						"message": "Product ID not found"
+					});
+			} else {
+				product.name = req.body.name;
+				product.weight = parseInt(req.body.weight);
+				product.price = parseFloat(req.body.price).toFixed(2);
+				product.photo = req.body.photo;
+				product.updatedAt = utc;
+
+				product.save(function(err, updatedProduct){
+					if(err){
+						res
+							.status(500)
+							.json(err);
+					} else {
+						res
+							.status(204)
+							.json();
+					}
+				})
+			}
+		})
 }
 
 module.exports.deleteProduct = function(req, res){
-	var db = dbconn.get();
-	var collection = db.collection('products');
 	var productId = req.params.productId;
-	var dbProduct = {};
 
-	collection
-		.findOne({"_id": ObjectId(productId)}, function(err, doc){
-			res
-				.status(200)
-				.json(doc);
-		})
-
-
-	if(req.body && req.body.name && req.body.price && req.body.weight){
-		newProduct = {
-			name: req.body.name,
-			price: req.body.price,
-			weight: req.body.weight
-		}
-
-		collection
-			.insertOne(newProduct, function(err, response){
-				console.log(response.ops);
+	Product
+		.findById(productId)
+		.select("isDeleted")
+		.exec(function(err, product){
+			if(err){
+				console.log("Error finding product");
 				res
-					.status(201)
-					.json(response.ops);
-			})
-	} else {
-		console.log("Data missing from body");
-		res
-			.status(400)
-			.json({message : "Required data missing from body"});
-	}
+					.status(500)
+					.json(err);
+			} else if (!product){
+				res
+					.status(404)
+					.json({
+						"message": "Product ID not found"
+					});
+			} else {
+				console.log("Product deleted, id: ", product);
+				product.isDeleted = true;
+				product.deletedAt = utc;
+				product.save(function(err, updatedProduct){
+					res
+						.status(204)
+						.json();
+				})
+			}
+		})
 }
