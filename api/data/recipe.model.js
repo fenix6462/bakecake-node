@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Product = mongoose.model('Product').schema;
+var RecipeProduct = mongoose.model('RecipeProduct').schema;
 
 var recipeSchema = new mongoose.Schema({
 	name: {
@@ -8,10 +9,7 @@ var recipeSchema = new mongoose.Schema({
 	},
 	description: String,
 	price: Number,
-	products: [{
-		product: Product,
-		weight: Number
-	}],
+	products: [RecipeProduct],
 	photos:[String],
 	isDeleted: {
 		type: Boolean,

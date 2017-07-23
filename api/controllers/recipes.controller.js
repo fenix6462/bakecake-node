@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Recipe = mongoose.model('Recipe');
+var RecipeProduct = mongoose.model('RecipeProduct');
 var utc = new Date();
 utc.setHours( utc.getHours() + 2);
 
@@ -27,7 +28,11 @@ module.exports.getRecipes = function(req, res){
 
 	Recipe
 		.find({isDeleted: {$in: [null, false]}})
-		.select('_id name weight price photos')
+		.select('name price products isPublished')
+		.populate({
+			path: 'products.product',
+			select: 'name price weight'
+		})
 		.skip(offset)
 		.limit(count)
 		.exec(function(err, recipes){

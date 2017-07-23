@@ -1,4 +1,5 @@
-var connection = require('../data/dbconnection.js');
+var mongoose = require('mongoose');
+var Product = mongoose.model('Product');
 var utc = new Date();
 utc.setHours( utc.getHours() + 2);
 
@@ -26,7 +27,7 @@ module.exports.getProducts = function(req, res){
 
 	Product
 		.find()
-		.select('_id name description price photos products isPublished')
+		.select('_id name weight price')
 		.skip(offset)
 		.limit(count)
 		.exec(function(err, products){
