@@ -1,5 +1,78 @@
-@color_primary: red;
+/*=================================
+=            Variables            =
+=================================*/
+
+@color_primary: transparent;
+
+
+/*============================
+=            Body            =
+============================*/
 
 body {
 	background: @color_primary;
 }
+
+/*=======================================
+=            Content wrapper            =
+=======================================*/
+
+.content-wrapper {
+	margin-top: 56px;
+}
+
+/*=============================
+=            Table            =
+=============================*/
+
+.table-fixed {
+	table-layout: fixed;
+}
+
+.table td, .table th {
+	vertical-align: middle;
+}
+
+/*==============================
+=            Loader            =
+==============================*/
+
+.loader {
+	margin: 5px auto;
+	font-size: 10px;
+	position: relative;
+	text-indent: -9999em;
+	border-top: 2px solid mix(white,#177FC3,80%);
+	border-right: 2px solid mix(white,#177FC3,80%);
+	border-bottom: 2px solid mix(white,#177FC3,80%);
+	border-left: 2px solid #177FC3;
+	animation: loader .7s infinite linear;
+	display: block;
+	&,&:after {
+		border-radius: 50%;
+		width: 20px;
+		height: 20px;
+	}
+}
+
+@keyframes loader {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/*======================================
+=            Input/Textarea            =
+======================================*/
+
+input,textarea {
+	&.transparent {
+		border: 0;
+		outline: none;
+	}
+	
+}
+

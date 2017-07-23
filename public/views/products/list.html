@@ -1,0 +1,24 @@
+<table class="table table-fixed">
+  <thead class="thead-inverse">
+    <tr>
+      <th style="width: 50px;">#</th>
+      <th>Nazwa</th>
+      <th>Cena</th>
+      <th>Waga/Liczba sztuk</th>
+      <th></th>
+      <th style="width: 50px;"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="product in products track by $index">
+      <th scope="row">{{ $index+1 }}</th>
+      <td><input type="text" class="form-control" ng-model="product.name" placeholder="Nazwa" required></td>
+      <td><input type="number" step="0.01" class="form-control" ng-model="product.price" placeholder="Cena" required></td>
+      <td><input type="number" min="1" class="form-control" ng-model="product.weight" placeholder="Waga/Liczba sztuk" required></td>
+      <th class="text-right">
+        <a href="#" ng-click="deleteProduct(product)" class="btn btn-danger btn-sm">Usuń</a>
+      </th>
+      <th><span class="loader"></span></th>
+    </tr>
+  </tbody>
+</table>

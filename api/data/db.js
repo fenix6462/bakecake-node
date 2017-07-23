@@ -40,3 +40,4 @@ process.once('SIGUSR2', function(){
 require('./product.model.js');
 require('./recipeProduct.model.js');
 require('./recipe.model.js');
+require('./user.model.js');

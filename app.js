@@ -19,6 +19,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use('/api', routes);
 
+app.get('*', function(req, res){
+  res.sendFile(__dirname + '/public/index.html');
+});
 
 var server = app.listen(app.get('port'), function(){
 	var port = server.address().port;

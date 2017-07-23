@@ -3,12 +3,13 @@ var router = express.Router();
 
 var productsController = require('../controllers/products.controller.js');
 var recipesController = require('../controllers/recipes.controller.js');
+var usersController = require('../controllers/users.controller.js');
 
 // Recipe
 
 router
 	.route('/recipes')
-	.get(recipesController.getRecipes)
+	.get(usersController.authenticate, recipesController.getRecipes)
 	.post(recipesController.addRecipe);
 
 router
@@ -42,6 +43,16 @@ router
 	.get(productsController.getProduct)
 	.put(productsController.updateProduct)
 	.delete(productsController.deleteProduct);
+
+
+// User
+router
+	.route('/users/register')
+	.post(usersController.register);
+
+router
+	.route('/users/login')
+	.post(usersController.login);
 
 
 module.exports = router;
