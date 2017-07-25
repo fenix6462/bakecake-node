@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var productsController = require('../controllers/products.controller.js');
+var uploadController = require('../controllers/upload.controller.js');
 var recipesController = require('../controllers/recipes.controller.js');
 var usersController = require('../controllers/users.controller.js');
 
@@ -9,7 +10,8 @@ var usersController = require('../controllers/users.controller.js');
 
 router
 	.route('/recipes')
-	.get(usersController.authenticate, recipesController.getRecipes)
+	//.get(usersController.authenticate, recipesController.getRecipes)
+	.get(recipesController.getRecipes)
 	.post(recipesController.addRecipe);
 
 router
@@ -53,6 +55,12 @@ router
 router
 	.route('/users/login')
 	.post(usersController.login);
+
+
+//Upload image
+router
+	.route('/uploadImage')
+	.post(uploadController.uploadImage);
 
 
 module.exports = router;

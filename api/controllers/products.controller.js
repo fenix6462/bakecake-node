@@ -6,7 +6,7 @@ utc.setHours( utc.getHours() + 2);
 module.exports.getProducts = function(req, res){
 
 	var offset = 0;
-	var count = 5;
+	var count = 0;
 
 	if(req.query && req.query.offset){
 		offset = parseInt(req.query.offset, 10);
@@ -26,7 +26,7 @@ module.exports.getProducts = function(req, res){
 	}
 
 	Product
-		.find()
+		.find({isDeleted: {$in: [null, false]}})
 		.select('_id name weight price')
 		.skip(offset)
 		.limit(count)

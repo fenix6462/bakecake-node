@@ -32,12 +32,13 @@ gulp.task('nodemon', function (cb) {
 gulp.task('compile-styles', function(){
 	return gulp.src(path.join(__dirname, 'public', 'less', '*.less'))
 				.pipe(concat('style.min.css'))
-				.pipe(less())
-				.pipe(autoprefixer({
-					browsers: ['last 2 versions'],
-					cascade: false
+				.pipe(less().on('error', function (err) {
+					console.log(err);
 				}))
-				.pipe(minifyCss())
+				//.pipe(autoprefixer())
+				.pipe(minifyCss().on('error', function (err) {
+					console.log(err);
+				}))
 				.pipe(gulp.dest(path.join(__dirname, 'public', 'css')));
 })
 

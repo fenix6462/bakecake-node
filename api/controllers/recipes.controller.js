@@ -7,7 +7,7 @@ utc.setHours( utc.getHours() + 2);
 module.exports.getRecipes = function(req, res){
 
 	var offset = 0;
-	var count = 5;
+	var count = 0;
 
 	if(req.query && req.query.offset){
 		offset = parseInt(req.query.offset, 10);
@@ -127,6 +127,7 @@ module.exports.addRecipe = function(req, res){
 			price: parseFloat(req.body.price).toFixed(2),
 			products: req.body.products,
 			photos: req.body.photos,
+			isPublished: req.body.isPublished,
 			createdAt: utc,
 			updatedAt: utc
 		}, function(err, recipe){
@@ -168,6 +169,7 @@ module.exports.updateRecipe = function(req, res){
 				recipe.price = parseFloat(req.body.price).toFixed(2);
 				recipe.products = req.body.products;
 				recipe.photos = req.body.photos;
+				recipe.isPublished = req.body.isPublished;
 				recipe.updatedAt = utc;
 
 				recipe.save(function(err, updatedRecipe){

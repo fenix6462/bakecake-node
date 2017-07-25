@@ -15,7 +15,10 @@ var productSchema = new mongoose.Schema({
 		type: Number,
 		required: true
 	},
-	photo: String,
+	isDeleted: {
+		type: Boolean,
+		default: false
+	},
 	createdAt: {
 		type: Date,
 		default: utc

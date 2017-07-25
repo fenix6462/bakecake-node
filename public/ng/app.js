@@ -1,4 +1,4 @@
-angular.module('bakecake', ['ngResource','ngRoute'])
+angular.module('bakecake', ['ngResource','ngRoute', 'thatisuday.dropzone', 'textAngular'])
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
 
     $locationProvider.html5Mode({
@@ -21,11 +21,6 @@ angular.module('bakecake', ['ngResource','ngRoute'])
 		templateUrl: 'views/recipes/create.html',
 		controller: 'CreateRecipesController',
         activetab: 'createRecipe'
-	})
-	.when('/przepisy/:productId',{
-		templateUrl: 'views/recipes/details.html',
-		controller: 'DetailsRecipesController',
-        activetab: 'recipe'
 	})
 	.when('/produkty',{
 		templateUrl: 'views/products/list.html',

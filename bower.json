@@ -28,6 +28,8 @@
     "tether": "^1.4.0",
     "components-font-awesome": "^4.7.0",
     "angular-route": "^1.6.5",
-    "angular-resource": "^1.6.5"
+    "angular-resource": "^1.6.5",
+    "ng-dropzone": "ngdropzone#^2.0.2",
+    "textAngular": "^1.5.16"
   }
 }

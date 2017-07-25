@@ -1,27 +1,27 @@
-angular.module('bakecake').factory('ProductService', ['$resource', function ($resource) {
-    var baseUrl = '/api/products'
+angular.module('bakecake').factory('RecipeService', ['$resource', function ($resource) {
+    var baseUrl = '/api/recipes'
     return $resource("", {}, {
-        getProducts: {
+        getRecipes: {
             method: "GET",
             url: baseUrl,
             isArray: true
         },
-        getProduct: {
+        getRecipe: {
             method: "GET",
-            url: baseUrl + '/:productId',
+            url: baseUrl + '/:recipeId',
             isArray: false
         },
-        editProduct: {
+        editRecipe: {
             method: "PUT",
-            url: baseUrl + '/:productId',
+            url: baseUrl + '/:recipeId',
             isArray: false
         },
-        deleteProduct: {
+        deleteRecipe: {
             method: "DELETE",
-            url: baseUrl + '/:productId',
+            url: baseUrl + '/:recipeId',
             isArray: false
         },
-        addProduct: {
+        addRecipe: {
             method: "POST",
             url: baseUrl,
             isArray: false

@@ -2,7 +2,8 @@
 =            Variables            =
 =================================*/
 
-@color_primary: transparent;
+@color_primary: #FB5557;
+@color_primary_hover: darken(@color_primary, 19%);
 
 
 /*============================
@@ -10,8 +11,36 @@
 ============================*/
 
 body {
-	background: @color_primary;
+	background: white;
 }
+
+/*===============================
+=            Buttons            =
+===============================*/
+
+button, a {
+	cursor: pointer;
+}
+
+.btn {
+	&:focus {
+		box-shadow: none !important;
+	}
+}
+
+.btn-primary {
+	&,&:focus {
+		background: @color_primary;
+		border-color: @color_primary_hover;
+		outline-color: @color_primary_hover;
+	}
+	&:hover,&:active {
+		background: @color_primary_hover;
+		border-color: @color_primary_hover;
+		outline-color: @color_primary_hover;
+	}
+}
+
 
 /*=======================================
 =            Content wrapper            =
@@ -70,9 +99,30 @@ body {
 
 input,textarea {
 	&.transparent {
-		border: 0;
+		border-color: transparent;
 		outline: none;
+		background: transparent !important;
+		cursor: default !important;
 	}
-	
+	&.ng-invalid.ng-touched, &.error {
+		&,&:focus {
+			border-color: red;
+		}
+	}
 }
 
+/*================================
+=            Dropzone            =
+================================*/
+
+.dropzone {
+	border: 2px dashed @color_primary;
+	background: white;
+	.dz-message {
+		margin: 3em auto;
+		span {
+			font-weight: bold; 
+			color: @color_primary;
+		}
+	}
+}
