@@ -1,4 +1,4 @@
-angular.module('bakecake', ['ngResource','ngRoute', 'thatisuday.dropzone', 'textAngular'])
+angular.module('bakecake', ['ngResource','ngRoute', 'thatisuday.dropzone', 'textAngular', 'ui.sortable'])
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
 
     $locationProvider.html5Mode({
@@ -31,11 +31,6 @@ angular.module('bakecake', ['ngResource','ngRoute', 'thatisuday.dropzone', 'text
 		templateUrl: 'views/products/create.html',
 		controller: 'CreateProductsController',
         activetab: 'createProduct'
-	})
-	.when('/produkty/:productId',{
-		templateUrl: 'views/products/details.html',
-		controller: 'DetailsProductsController',
-        activetab: 'product'
 	})
 	.otherwise({redirectTo:'/'});
 }]);

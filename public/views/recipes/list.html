@@ -1,1 +1,30 @@
-<h1>List recipes</h1>
+<h1 class="page-header col-md-6">
+  Lista przepisów 
+  <a href="/przepisy/dodaj" class="btn btn-primary btn-sm">Nowy przepis</a>
+</h1>
+<table class="table table-fixed">
+  <thead class="thead-inverse">
+    <tr>
+      <th style="width: 50px;">#</th>
+      <th>Nazwa</th>
+      <th>Koszt przepisu</th>
+      <th>Cena widoczna dla klientów</th>
+      <th>Widoczne dla klientów</th>
+      <th></th>
+      <th style="width: 50px;"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="recipe in recipes track by $index">
+      <th scope="row">{{ $index+1 }}</th>
+      <td>{{ recipe.name }}</td>
+      <td>{{ recipe.price }}</td>
+      <td><input type="number" step="0.01" class="form-control" ng-model="recipe.price" placeholder="Cena" ng-disabled="!recipe.isEditMode" ng-class="{'transparent': !recipe.isEditMode}" required></td>
+      <td><input type="number" min="1" class="form-control" ng-model="recipe.weight" placeholder="Waga/Liczba sztuk" ng-disabled="!recipe.isEditMode" ng-class="{'transparent': !recipe.isEditMode}" required></td>
+      <th class="text-right">
+        <a href="#" ng-click="deleteRecipe(recipe)" class="btn btn-danger btn-sm" ng-disabled="recipe.isLoading">Usuń</a>
+      </th>
+      <th><span class="loader" ng-show="recipe.isLoading"></span></th>
+    </tr>
+  </tbody>
+</table>

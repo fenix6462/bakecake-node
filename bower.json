@@ -30,6 +30,9 @@
     "angular-route": "^1.6.5",
     "angular-resource": "^1.6.5",
     "ng-dropzone": "ngdropzone#^2.0.2",
-    "textAngular": "^1.5.16"
+    "textAngular": "^1.5.16",
+    "angular-ui-sortable": "^0.17.1",
+    "jquery-ui": "^1.12.1",
+    "angular-i18n": "^1.6.5"
   }
 }

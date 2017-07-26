@@ -10,12 +10,6 @@ var path = require('path');
 var express = require('express');
 var app = express();
 
-//BROWSER SYNC
-gulp.task('browser-sync', ['nodemon'], function(){
-	browserSync.init({
-		proxy: "http://localhost:5000"
-	})
-})
 
 //NODEMON
 gulp.task('nodemon', function (cb) {
@@ -28,6 +22,13 @@ gulp.task('nodemon', function (cb) {
 	});
 });
 
+//BROWSER SYNC
+gulp.task('browser-sync', ['nodemon'], function(){
+	browserSync.init({
+		proxy: "http://localhost:5000"
+	})
+})
+
 //STYLE COMPILER
 gulp.task('compile-styles', function(){
 	return gulp.src(path.join(__dirname, 'public', 'less', '*.less'))
@@ -35,7 +36,7 @@ gulp.task('compile-styles', function(){
 				.pipe(less().on('error', function (err) {
 					console.log(err);
 				}))
-				//.pipe(autoprefixer())
+				.pipe(autoprefixer())
 				.pipe(minifyCss().on('error', function (err) {
 					console.log(err);
 				}))

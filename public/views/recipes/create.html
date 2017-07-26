@@ -10,16 +10,52 @@
 				<label for="price">Cena</label>
 				<input type="number" step="0.01" class="form-control" ng-class="{'error': (createRecipeForm.$submitted || createRecipeForm.price.$touched ) &&  createRecipeForm.price.$error.required }" id="price" name="price" ng-model="newRecipe.price" placeholder="Cena" required>
 			</div>
-			<div text-angular ta-toolbar="taOptions.toolbar" ng-model="newRecipe.description"></div>
-			<label class="custom-control custom-checkbox col-md-12">
+			<label class="custom-control custom-checkbox col-md-12 mb-15">
 				<input type="checkbox" class="custom-control-input" ng-model="newRecipe.isPublished">
 				<span class="custom-control-indicator"></span>
-				<span class="custom-control-description">Publiczny</span>
+				<span class="custom-control-description">Przepis widoczny na stronie głównej</span>
 			</label>
-		  <button class="btn btn-primary" ng-click="createRecipeForm.$valid && createRecipe()">Dodaj przepis</button>
+			<div text-angular class="text-angular mb-15" ta-toolbar="taOptions.toolbar" ng-model="newRecipe.description"></div>
+		  	<button class="btn btn-primary" ng-click="createRecipeForm.$valid && createRecipe()">Dodaj przepis</button>
 		</form>
 	</div>
 	<div class="col-md-8">
 		<div class="dropzone" options="dzOptions" callbacks="dzCallbacks" methods="dzMethods" ng-dropzone></div>
+		<div class="row">
+			<div class="col">
+				<div class="card">
+					<div class="card-header">
+						Lista dostępnych produktów
+					</div>
+					<div class="card-block">
+						<ul class="list-group sortable products" ui-sortable="sortableOptionsList[0]" ng-model="products">
+							<li class="list-group-item justify-content-between" ng-repeat="product in products">
+								{{ product.name }}
+								<span class="badge badge-default badge-pill">{{ product.price | currency }} za {{ product.weight }}</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<div class="card-header">
+						Lista produktów przypisanych do przepisu
+					</div>
+					<div class="card-block">
+						<ul class="list-group sortable recipe-products" ui-sortable="sortableOptionsList[1]" ng-model="newRecipe.products">
+							<li class="list-group-item justify-content-between" ng-repeat="product in newRecipe.products">
+								<div class="row">
+									<div class="col-8">
+										{{ product.name }}
+									</div>
+									<input type="number" ng-model="product.productWeight" class="form-control col-4" placeholder="Ilość">
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

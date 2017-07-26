@@ -1,4 +1,7 @@
-<h1 class="page-header">Lista produktów</h1>
+<h1 class="page-header col-md-6">
+  Lista produktów 
+  <a href="/produkty/dodaj" class="btn btn-primary btn-sm">Nowy produkt</a>
+</h1>
 <table class="table table-fixed">
   <thead class="thead-inverse">
     <tr>
@@ -17,7 +20,7 @@
       <td><input type="number" step="0.01" class="form-control" ng-model="product.price" placeholder="Cena" ng-disabled="!product.isEditMode" ng-class="{'transparent': !product.isEditMode}" required></td>
       <td><input type="number" min="1" class="form-control" ng-model="product.weight" placeholder="Waga/Liczba sztuk" ng-disabled="!product.isEditMode" ng-class="{'transparent': !product.isEditMode}" required></td>
       <th class="text-right">
-        <a ng-show="!product.isEditMode" href="#" ng-click="enableEditMode(product)" class="btn btn-primary btn-sm" ng-disabled="product.isLoading">Edit</a>
+        <a ng-show="!product.isEditMode" href="#" ng-click="enableEditMode(product)" class="btn btn-warning btn-sm" ng-disabled="product.isLoading">Edit</a>
         <a ng-show="product.isEditMode" href="#" ng-click="(product.price && product.weight && product.name) && saveProduct(product)" class="btn btn-success btn-sm" ng-disabled="product.isLoading">Save</a>
         <a href="#" ng-click="deleteProduct(product)" class="btn btn-danger btn-sm" ng-disabled="product.isLoading">Usuń</a>
       </th>

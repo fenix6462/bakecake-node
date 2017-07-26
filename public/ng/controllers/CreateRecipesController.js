@@ -4,7 +4,8 @@ angular.module('bakecake').controller('CreateRecipesController', function($scope
 	$scope.isLoading = false;	
 
 	$scope.newRecipe = {
-		photos: []
+		photos: [],
+		products: []
 	};
 
 	ProductService.getProducts(function(response){
@@ -52,18 +53,40 @@ angular.module('bakecake').controller('CreateRecipesController', function($scope
 
 	$scope.taOptions = {
 		toolbar: [
-			['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote','bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear','justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
+			['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p',
+			'bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol',
+			'justifyLeft', 'justifyCenter', 'justifyRight']
 		]
 	}
 
 	$scope.createRecipe = function(){
+		var products = [];
+		for(var i = 0; i < $scope.newRecipe.products.length; i++){
+			var newProduct = {};
+			newProduct.product = $scope.newRecipe.products[i]._id;
+			newProduct.productWeight = $scope.newRecipe.products[i].productWeight;
+			products.push(newProduct);
+		}
+		$scope.newRecipe.products = products;
 		$scope.isLoading = true;
 		RecipeService.addRecipe($scope.newRecipe, function(){
 			$scope.isLoading = false;
-			$location.path('/recipes');
+			$location.path('/przepisy');
 		}, function(){
 			alert('error');
 			$scope.isLoading = false;
 		})
 	}
+
+  	function createOptions (listName) {
+	    var _listName = listName;
+		var options = {
+			placeholder: "app",
+			connectWith: ".list-group"
+		};
+		return options;
+	}
+
+  $scope.sortableOptionsList = [createOptions('A'), createOptions('B')];
+
 });
