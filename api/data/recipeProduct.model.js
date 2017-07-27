@@ -6,7 +6,11 @@ var recipeProductSchema = new mongoose.Schema({
 }, {toJSON: {virtuals: true}});
 
 recipeProductSchema.virtual('productPrice').get(function() {
-    return parseFloat(this.product.price * this.productWeight / this.product.weight).toFixed(2);
+	if(this.product && this.product.price && this.product.weight && this.productWeight){
+    	return parseFloat(this.product.price * this.productWeight / this.product.weight).toFixed(2);
+	} else {
+		return 0;
+	}
 });
 
 mongoose.model('RecipeProduct', recipeProductSchema);

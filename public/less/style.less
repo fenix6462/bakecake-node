@@ -146,12 +146,17 @@ input,textarea {
 	margin-bottom: 10px;
 }
 
+.mt-30 {
+	margin-top: 30px;
+}
+
 /*================================
 =            Sortable            =
 ================================*/
 
 .sortable {
 	min-height: 100px;
+	list-style: none;
 }
 
 .recipe-products {
@@ -160,4 +165,12 @@ input,textarea {
 		
 		line-height: 38px;
 	}
+}
+
+/*=======================================
+=            Custom checkbox            =
+=======================================*/
+
+.custom-control-input:focus~.custom-control-indicator {
+	box-shadow: none;
 }

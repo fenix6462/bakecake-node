@@ -22,6 +22,12 @@ angular.module('bakecake', ['ngResource','ngRoute', 'thatisuday.dropzone', 'text
 		controller: 'CreateRecipesController',
         activetab: 'createRecipe'
 	})
+	.when('/przepisy/:id/edit',{
+		templateUrl: 'views/recipes/edit.html',
+		controller: 'EditRecipesController',
+        activetab: 'editRecipe'
+	})
+
 	.when('/produkty',{
 		templateUrl: 'views/products/list.html',
 		controller: 'ListProductsController',

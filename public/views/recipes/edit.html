@@ -1,22 +1,22 @@
-<h1 class="page-header">Dodaj przepis</h1>
+<h1 class="page-header">Edit przepis</h1>
 <div class="row">
 	<div class="col-md-4">
 		<form name="createRecipeForm" novalidate>
 			<div class="form-group">
 				<label for="name">Nazwa przepisu</label>
-				<input type="text" class="form-control" ng-class="{'error': (createRecipeForm.$submitted || createRecipeForm.name.$touched ) &&  createRecipeForm.name.$error.required }" id="name" name="name" ng-model="newRecipe.name" placeholder="Nazwa przepisu" required>
+				<input type="text" class="form-control" ng-class="{'error': (createRecipeForm.$submitted || createRecipeForm.name.$touched ) &&  createRecipeForm.name.$error.required }" id="name" name="name" ng-model="recipe.name" placeholder="Nazwa przepisu" required>
 			</div>
 			<div class="form-group">
 				<label for="price">Cena</label>
-				<input type="number" step="0.01" class="form-control" ng-class="{'error': (createRecipeForm.$submitted || createRecipeForm.price.$touched ) &&  createRecipeForm.price.$error.required }" id="price" name="price" ng-model="newRecipe.price" placeholder="Cena" required>
+				<input type="number" step="0.01" class="form-control" ng-class="{'error': (createRecipeForm.$submitted || createRecipeForm.price.$touched ) &&  createRecipeForm.price.$error.required }" id="price" name="price" ng-model="recipe.price" placeholder="Cena" required>
 			</div>
 			<label class="custom-control custom-checkbox col-md-12 mb-15">
-				<input type="checkbox" class="custom-control-input" ng-model="newRecipe.isPublished">
+				<input type="checkbox" class="custom-control-input" ng-model="recipe.isPublished">
 				<span class="custom-control-indicator"></span>
 				<span class="custom-control-description">Przepis widoczny na stronie głównej</span>
 			</label>
-			<div text-angular class="text-angular mb-15" ta-toolbar="taOptions.toolbar" ng-model="newRecipe.description"></div>
-		  	<button class="btn btn-primary" ng-click="createRecipeForm.$valid && createRecipe()">Dodaj przepis</button>
+			<div text-angular class="text-angular mb-15" ta-toolbar="taOptions.toolbar" ng-model="recipe.description"></div>
+		  	<button class="btn btn-primary" ng-click="createRecipeForm.$valid && saveRecipe()">Edytuj przepis</button>
 		</form>
 	</div>
 	<div class="col-md-8">
@@ -32,7 +32,7 @@
 					</div>
 					<div class="card-block">
 						<ul class="list-group sortable products" ui-sortable="sortableOptionsList[0]" ng-model="products">
-							<li class="list-group-item justify-content-between" ng-repeat="product in products | filter: filterProducts">
+							<li class="list-group-item justify-content-between" ng-repeat="product in products">
 								{{ product.name }}
 								<span class="badge badge-default badge-pill">{{ product.price | currency }} za {{ product.weight }}</span>
 							</li>
@@ -49,8 +49,8 @@
 						</div>
 					</div>
 					<div class="card-block">
-						<ul class="list-group sortable recipe-products" ui-sortable="sortableOptionsList[1]" ng-model="newRecipe.products">
-							<li class="list-group-item justify-content-between" ng-repeat="product in newRecipe.products | filter: filterRecipeProducts">
+						<ul class="list-group sortable recipe-products" ui-sortable="sortableOptionsList[1]" ng-model="recipe.products">
+							<li class="list-group-item justify-content-between" ng-repeat="product in recipe.products | filter: filterRecipeProducts">
 								<div class="row">
 									<div class="col-8">
 										{{ product.name }}

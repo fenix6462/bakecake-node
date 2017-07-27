@@ -98,6 +98,10 @@ module.exports.getRecipe = function(req, res){
 	Recipe
 		.findById(recipeId)
 		.select('_id name description price photos products isPublished')
+		.populate({
+			path: 'products.product',
+			select: 'name price weight'
+		})
 		.exec(function(err, recipe){
 			if(err){
 				console.log("Error finding recipe");

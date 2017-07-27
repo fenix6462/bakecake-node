@@ -26,12 +26,12 @@ router
 
 router
 	.route('/recipes/:recipeId/publish')
-	.post(recipesController.publishRecipe);
+	.get(recipesController.publishRecipe);
 
 
 router
 	.route('/recipes/:recipeId/unpublish')
-	.post(recipesController.unpublishRecipe);
+	.get(recipesController.unpublishRecipe);
 
 
 // Product

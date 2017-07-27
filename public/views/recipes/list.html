@@ -18,10 +18,16 @@
     <tr ng-repeat="recipe in recipes track by $index">
       <th scope="row">{{ $index+1 }}</th>
       <td>{{ recipe.name }}</td>
-      <td>{{ recipe.price }}</td>
-      <td><input type="number" step="0.01" class="form-control" ng-model="recipe.price" placeholder="Cena" ng-disabled="!recipe.isEditMode" ng-class="{'transparent': !recipe.isEditMode}" required></td>
-      <td><input type="number" min="1" class="form-control" ng-model="recipe.weight" placeholder="Waga/Liczba sztuk" ng-disabled="!recipe.isEditMode" ng-class="{'transparent': !recipe.isEditMode}" required></td>
+      <td>{{ recipe.realPrice | currency }}</td>
+      <td>{{ recipe.price | currency }}</td>
+      <td>
+        <label class="custom-control custom-checkbox col-md-12 mb-15">
+          <input type="checkbox" class="custom-control-input" ng-model="recipe.isPublished" ng-change="togglePublish(recipe)" ng-disabled="recipe.isLoading">
+          <span class="custom-control-indicator"></span>
+        </label>
+      </td>
       <th class="text-right">
+        <a href="/przepisy/{{ recipe._id }}/edit" class="btn btn-info btn-sm" ng-disabled="recipe.isLoading">Edytuj</a>
         <a href="#" ng-click="deleteRecipe(recipe)" class="btn btn-danger btn-sm" ng-disabled="recipe.isLoading">Usuń</a>
       </th>
       <th><span class="loader" ng-show="recipe.isLoading"></span></th>

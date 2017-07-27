@@ -31,6 +31,15 @@ var recipeSchema = new mongoose.Schema({
 	publishedAt: {
 		type: Date
 	}
-})
+}, {toJSON: {virtuals: true}})
+
+recipeSchema.virtual('realPrice').get(function() {
+	var price = 0;
+	for(var i = 0; i < this.products.length; i++){
+		price += this.products[i].productPrice;
+	}
+    return parseFloat(price).toFixed(2);
+});
+
 
 mongoose.model('Recipe', recipeSchema);

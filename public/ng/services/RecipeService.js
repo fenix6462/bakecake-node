@@ -25,6 +25,16 @@ angular.module('bakecake').factory('RecipeService', ['$resource', function ($res
             method: "POST",
             url: baseUrl,
             isArray: false
+        },
+        publishRecipe: {
+            method: "GET",
+            url: baseUrl + '/:recipeId/publish',
+            isArray: false
+        },
+        unpublishRecipe: {
+            method: "GET",
+            url: baseUrl + '/:recipeId/unpublish',
+            isArray: false
         }
     });
 }]);

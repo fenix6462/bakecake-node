@@ -14,18 +14,6 @@ angular.module('bakecake').controller('CreateRecipesController', function($scope
 		alert('error');
 	});
 
-	$scope.createRecipe = function(){
-		$scope.isLoading = true;
-		RecipeService.addRecipe($scope.newRecipe, function(){
-			$scope.isLoading = false;
-			debugger;
-			$location.path('/przepisy');
-		}, function(){
-			alert('error');
-			$scope.isLoading = false;
-		})
-	}
-
 	$scope.dzOptions = {
 		url : '/api/uploadImage',
 		paramName : 'photo',
@@ -67,9 +55,10 @@ angular.module('bakecake').controller('CreateRecipesController', function($scope
 			newProduct.productWeight = $scope.newRecipe.products[i].productWeight;
 			products.push(newProduct);
 		}
-		$scope.newRecipe.products = products;
+		var newRecipe = $scope.newRecipe;
+		newRecipe.products = products;
 		$scope.isLoading = true;
-		RecipeService.addRecipe($scope.newRecipe, function(){
+		RecipeService.addRecipe(newRecipe, function(){
 			$scope.isLoading = false;
 			$location.path('/przepisy');
 		}, function(){
@@ -87,6 +76,6 @@ angular.module('bakecake').controller('CreateRecipesController', function($scope
 		return options;
 	}
 
-  $scope.sortableOptionsList = [createOptions('A'), createOptions('B')];
+  	$scope.sortableOptionsList = [createOptions('A'), createOptions('B')];
 
 });
